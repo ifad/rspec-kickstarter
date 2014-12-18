@@ -1,14 +1,12 @@
-#This fork
-I'm approaching an old Rails 2 project running on ruby 1.8.7 so
-forking this to support this use case.
+#Vintage fork
+This fork supports ruby 1.8.7 and RSpec 1.x with the old syntax.
 
 # rspec-kickstarter
 
 rspec-kickstarter supports you writing tests for existing code.
 
-[![Build Status](https://travis-ci.org/seratch/rspec-kickstarter.png)](https://travis-ci.org/seratch/rspec-kickstarter)
-[![Coverage Status](https://coveralls.io/repos/seratch/rspec-kickstarter/badge.png)](https://coveralls.io/r/seratch/rspec-kickstarter)
-[![Code Climate](https://codeclimate.com/github/seratch/rspec-kickstarter.png)](https://codeclimate.com/github/seratch/rspec-kickstarter)
+[![Build Status](https://travis-ci.org/ifad/rspec-kickstarter-vintage.png)](https://travis-ci.org/ifad/rspec-kickstarter-vintage)
+[![Code Climate](https://codeclimate.com/github/ifad/rspec-kickstarter-vintage.png)](https://codeclimate.com/github/ifad/rspec-kickstarter-vintage)
 
 ## RubyKaigi 2013
 
@@ -21,9 +19,7 @@ https://speakerdeck.com/seratch/a-test-code-generator-for-rspec-users
 
 ## Installation
 
-https://rubygems.org/gems/rspec-kickstarter
-
-    gem install rspec-kickstarter
+    gem 'rspec-kickstarter', :github => "ifad/rspec-kickstarter-vintage"
 
 ## Usage
 
