@@ -9,7 +9,7 @@ describe RSpecKickstarter::RDocFactory do
     it 'works' do
       file_path = 'lib/rspec_kickstarter.rb'
       result = RSpecKickstarter::RDocFactory.get_rdoc_class_or_module(file_path)
-      expect(result).not_to be_nil
+      result.should_not be_nil
     end
 
     it 'works with Ruby 2.0' do
@@ -21,7 +21,7 @@ describe RSpecKickstarter::RDocFactory do
         begin
           file_path = 'lib/rspec_kickstarter.rb'
           result = RSpecKickstarter::RDocFactory.get_rdoc_class_or_module(file_path)
-          expect(result).not_to be_nil
+          result.should_not be_nil
         ensure
           RDoc.class_eval do remove_const :Store end
         end

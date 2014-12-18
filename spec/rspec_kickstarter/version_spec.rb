@@ -6,7 +6,7 @@ describe RSpecKickstarter do
 
   describe RSpecKickstarter::VERSION do
     it 'exists' do
-      expect(RSpecKickstarter::VERSION).not_to be_nil
+      RSpecKickstarter::VERSION.should_not be_nil
     end
   end
 

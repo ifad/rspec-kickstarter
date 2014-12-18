@@ -9,6 +9,6 @@ else
   SimpleCov.start
 end
 
-RSpec.configure do |config|
+Spec::Runner.configure do |config|
 end
 
