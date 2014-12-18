@@ -9,33 +9,33 @@ describe RSpecKickstarter::Generator do
   describe '#new' do
     it 'works without params' do
       result = RSpecKickstarter::Generator.new
-      expect(result).not_to be_nil
+      result.should_not be_nil
     end
     it 'works' do
       spec_dir = './spec'
 
       result = RSpecKickstarter::Generator.new(spec_dir)
-      expect(result).not_to be_nil
+      result.should_not be_nil
     end
   end
 
   describe '#get_complete_class_name' do
     it 'works' do
-      parent = double(:parent, name: nil)
-      c = double(:c, parent: parent)
+      parent = double(:parent, :name => nil)
+      c = double(:c, :parent => parent)
       name = 'ClassName'
 
       result = generator.get_complete_class_name(c, name)
-      expect(result).to eq('ClassName')
+      result.should == 'ClassName'
     end
   end
 
   describe '#instance_name' do
     it 'works' do
-      c = double(:c, name: 'generator')
+      c = double(:c, :name => 'generator')
 
       result = generator.instance_name(c)
-      expect(result).to eq('generator')
+      result.should == 'generator'
     end
   end
 
@@ -44,75 +44,75 @@ describe RSpecKickstarter::Generator do
       params = "(a, b = 'foo', c = 123)"
 
       result = generator.to_param_names_array(params)
-      expect(result).to eq(['a', 'b', 'c'])
+      result.should == ['a', 'b', 'c']
     end
   end
 
   describe '#get_params_initialization_code' do
     it 'works' do
-      method = double(:method, params: "(a = 1,b = 'aaaa')")
+      method = double(:method, :params => "(a = 1,b = 'aaaa')")
 
       result = generator.get_params_initialization_code(method)
-      expect(result).to eq("      a = double('a')\n      b = double('b')\n")
+      result.should == "      a = double('a')\n      b = double('b')\n"
     end
   end
 
   describe '#get_instantiation_code' do
     it 'works with modules' do
-      method = double(:method, singleton: true, name: 'do_something')
-      c = double(:c, name: 'Foo', method_list: [method])
+      method = double(:method, :singleton => true, :name => 'do_something')
+      c = double(:c, :name => 'Foo', :method_list => [method])
 
       result = generator.get_instantiation_code(c, method)
-      expect(result).to eq('')
+      result.should == ''
     end
 
     it 'works with classes' do
-      parent = double(:parent, name: nil)
-      method = double(:method, singleton: false, name: 'do_something')
-      c = double(:c, name: 'Foo', parent: parent, method_list: [method])
+      parent = double(:parent, :name => nil)
+      method = double(:method, :singleton => false, :name => 'do_something')
+      c = double(:c, :name => 'Foo', :parent => parent, :method_list => [method])
 
       result = generator.get_instantiation_code(c, method)
-      expect(result).to eq("      foo = Foo.new\n")
+      result.should == "      foo = Foo.new\n"
     end
   end
 
   describe '#get_method_invocation_code' do
     it 'works with modules' do
-      parent = double(:parent, name: nil)
-      method = double(:method, singleton: true, name: 'do_something', params: '(a, b)', block_params: '')
-      c = double(:c, name: 'Module', parent: parent, method_list: [method])
+      parent = double(:parent, :name => nil)
+      method = double(:method, :singleton => true, :name => 'do_something', :params => '(a, b)', :block_params => '')
+      c = double(:c, :name => 'Module', :parent => parent, :method_list => [method])
 
       result = generator.get_method_invocation_code(c, method)
-      expect(result).to eq('Module.do_something(a, b)')
+      result.should == 'Module.do_something(a, b)'
     end
     it 'works with classes' do
-      parent = double(:parent, name: 'Module')
-      method = double(:method, singleton: false, name: 'do_something', params: '(a, b)', block_params: '')
-      c = double(:c, name: 'ClassName', parent: parent, method_list: [method])
+      parent = double(:parent, :name => 'Module')
+      method = double(:method, :singleton => false, :name => 'do_something', :params => '(a, b)', :block_params => '')
+      c = double(:c, :name => 'ClassName', :parent => parent, :method_list => [method])
 
       result = generator.get_method_invocation_code(c, method)
-      expect(result).to eq('class_name.do_something(a, b)')
+      result.should == 'class_name.do_something(a, b)'
     end
   end
 
   describe '#get_block_code' do
     it 'works with no arg' do
-      method = double(:method, block_params: '')
+      method = double(:method, :block_params => '')
 
       result = generator.get_block_code(method)
-      expect(result).to eq('')
+      result.should == ''
     end
     it 'works with 1 arg block' do
-      method = double(:method, block_params: 'a')
+      method = double(:method, :block_params => 'a')
 
       result = generator.get_block_code(method)
-      expect(result).to eq(' { |a| }')
+      result.should == ' { |a| }'
     end
     it 'works with 2 args block' do
-      method = double(:method, block_params: 'a, b')
+      method = double(:method, :block_params => 'a, b')
 
       result = generator.get_block_code(method)
-      expect(result).to eq(' { |a, b| }')
+      result.should == ' { |a, b| }'
     end
   end
 
@@ -261,12 +261,12 @@ CODE
     it 'works' do
       file_path = 'lib/foo/bar.rb'
       result = generator.get_spec_path(file_path)
-      expect(result).to eq('tmp/spec/foo/bar_spec.rb')
+      result.should == 'tmp/spec/foo/bar_spec.rb'
     end
     it 'works with path which starts with current dir' do
       file_path = './lib/foo/bar.rb'
       result = generator.get_spec_path(file_path)
-      expect(result).to eq('tmp/spec/foo/bar_spec.rb')
+      result.should == 'tmp/spec/foo/bar_spec.rb'
     end
   end
 
@@ -274,32 +274,32 @@ CODE
     it 'works' do
       file_path = 'lib/foo/bar.rb'
       result = generator.to_string_value_to_require(file_path)
-      expect(result).to eq('foo/bar')
+      result.should == 'foo/bar'
     end
   end
 
 
   describe '#get_rails_helper_method_invocation_code' do
     it 'works' do
-      parent = double(:parent, name: nil)
-      c = double(:c, name: 'ClassName', parent: parent)
-      method = double(:method, singleton: false, name: 'do_something', params: '(a, b)', block_params: '')
+      parent = double(:parent, :name => nil)
+      c = double(:c, :name => 'ClassName', :parent => parent)
+      method = double(:method, :singleton => false, :name => 'do_something', :params => '(a, b)', :block_params => '')
 
       result = generator.get_rails_helper_method_invocation_code(method)
-      expect(result).to eq('do_something(a, b)')
+      result.should == 'do_something(a, b)'
     end
   end
 
   describe '#get_rails_http_method' do
     it 'works' do
-      expect(generator.get_rails_http_method('foo')).to eq('get')
-      expect(generator.get_rails_http_method('index')).to eq('get')
-      expect(generator.get_rails_http_method('new')).to eq('get')
-      expect(generator.get_rails_http_method('create')).to eq('post')
-      expect(generator.get_rails_http_method('show')).to eq('get')
-      expect(generator.get_rails_http_method('edit')).to eq('get')
-      expect(generator.get_rails_http_method('update')).to eq('put')
-      expect(generator.get_rails_http_method('destroy')).to eq('delete')
+      generator.get_rails_http_method('foo').should == 'get'
+      generator.get_rails_http_method('index').should == 'get'
+      generator.get_rails_http_method('new').should == 'get'
+      generator.get_rails_http_method('create').should == 'post'
+      generator.get_rails_http_method('show').should == 'get'
+      generator.get_rails_http_method('edit').should == 'get'
+      generator.get_rails_http_method('update').should == 'put'
+      generator.get_rails_http_method('destroy').should == 'delete'
     end
   end
 

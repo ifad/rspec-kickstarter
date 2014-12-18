@@ -1,3 +1,7 @@
+#This fork
+I'm approaching an old Rails 2 project running on ruby 1.8.7 so
+forking this to support this use case.
+
 # rspec-kickstarter
 
 rspec-kickstarter supports you writing tests for existing code.

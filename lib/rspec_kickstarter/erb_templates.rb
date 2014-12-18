@@ -16,7 +16,7 @@ module RSpecKickstarter::ERBTemplates
 <%- unless get_instantiation_code(c, method).nil?      -%><%= get_instantiation_code(c, method) %><%- end -%>
 <%- unless get_params_initialization_code(method).nil? -%><%= get_params_initialization_code(method) %><%- end -%>
       result = <%= get_method_invocation_code(c, method) %>
-      expect(result).not_to be_nil
+      result.should_not be_nil
     end
   end
 <% } %>
@@ -40,7 +40,7 @@ SPEC
   describe '<%= get_rails_http_method(method.name).upcase %> <%= method.name %>' do
     it 'works' do
       <%= get_rails_http_method(method.name) %> :<%= method.name %>, {}, {}
-      expect(response.status).to eq(200)
+      response.status.should == 200
     end
   end
 <% } %>
@@ -62,7 +62,7 @@ SPEC
   describe '#<%= method.name %>' do
     it 'works' do
       result = <%= get_rails_helper_method_invocation_code(method) %>
-      expect(result).not_to be_nil
+      result.should_not be_nil
     end
   end
 <% } %>

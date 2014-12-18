@@ -69,12 +69,12 @@ class RSpecKickstarter::Generator
   # e.g. FooBar -> "foo_bar"
   #
   def instance_name(c)
-    c.name
-      .gsub(/::/, '/')
-      .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-      .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-      .tr('-', '_')
-      .downcase
+    c.name.
+      gsub(/::/, '/').
+      gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+      gsub(/([a-z\d])([A-Z])/, '\1_\2').
+      tr('-', '_').
+      downcase
   end
 
   #
@@ -128,9 +128,9 @@ class RSpecKickstarter::Generator
   #
   def append_to_existing_spec(class_or_module, dry_run, rails_mode, spec_path)
     existing_spec = File.read(spec_path)
-    lacking_methods = class_or_module.method_list
-      .select { |m| m.visibility == :public }
-      .reject { |m| existing_spec.match(m.name) }
+    lacking_methods = class_or_module.method_list.
+      select { |m| m.visibility == :public }.
+      reject { |m| existing_spec.match(m.name) }
 
     if lacking_methods.empty?
       puts "#{spec_path} skipped."
