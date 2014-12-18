@@ -21,8 +21,8 @@ describe RSpecKickstarter::Generator do
 
   describe '#get_complete_class_name' do
     it 'works' do
-      parent = double(:parent, name: nil)
-      c = double(:c, parent: parent)
+      parent = double(:parent, :name => nil)
+      c = double(:c, :parent => parent)
       name = 'ClassName'
 
       result = generator.get_complete_class_name(c, name)
@@ -32,7 +32,7 @@ describe RSpecKickstarter::Generator do
 
   describe '#instance_name' do
     it 'works' do
-      c = double(:c, name: 'generator')
+      c = double(:c, :name => 'generator')
 
       result = generator.instance_name(c)
       expect(result).to eq('generator')
@@ -50,7 +50,7 @@ describe RSpecKickstarter::Generator do
 
   describe '#get_params_initialization_code' do
     it 'works' do
-      method = double(:method, params: "(a = 1,b = 'aaaa')")
+      method = double(:method, :params => "(a = 1,b = 'aaaa')")
 
       result = generator.get_params_initialization_code(method)
       expect(result).to eq("      a = double('a')\n      b = double('b')\n")
@@ -59,17 +59,17 @@ describe RSpecKickstarter::Generator do
 
   describe '#get_instantiation_code' do
     it 'works with modules' do
-      method = double(:method, singleton: true, name: 'do_something')
-      c = double(:c, name: 'Foo', method_list: [method])
+      method = double(:method, :singleton => true, :name => 'do_something')
+      c = double(:c, :name => 'Foo', :method_list => [method])
 
       result = generator.get_instantiation_code(c, method)
       expect(result).to eq('')
     end
 
     it 'works with classes' do
-      parent = double(:parent, name: nil)
-      method = double(:method, singleton: false, name: 'do_something')
-      c = double(:c, name: 'Foo', parent: parent, method_list: [method])
+      parent = double(:parent, :name => nil)
+      method = double(:method, :singleton => false, :name => 'do_something')
+      c = double(:c, :name => 'Foo', :parent => parent, :method_list => [method])
 
       result = generator.get_instantiation_code(c, method)
       expect(result).to eq("      foo = Foo.new\n")
@@ -78,17 +78,17 @@ describe RSpecKickstarter::Generator do
 
   describe '#get_method_invocation_code' do
     it 'works with modules' do
-      parent = double(:parent, name: nil)
-      method = double(:method, singleton: true, name: 'do_something', params: '(a, b)', block_params: '')
-      c = double(:c, name: 'Module', parent: parent, method_list: [method])
+      parent = double(:parent, :name => nil)
+      method = double(:method, :singleton => true, :name => 'do_something', :params => '(a, b)', :block_params => '')
+      c = double(:c, :name => 'Module', :parent => parent, :method_list => [method])
 
       result = generator.get_method_invocation_code(c, method)
       expect(result).to eq('Module.do_something(a, b)')
     end
     it 'works with classes' do
-      parent = double(:parent, name: 'Module')
-      method = double(:method, singleton: false, name: 'do_something', params: '(a, b)', block_params: '')
-      c = double(:c, name: 'ClassName', parent: parent, method_list: [method])
+      parent = double(:parent, :name => 'Module')
+      method = double(:method, :singleton => false, :name => 'do_something', :params => '(a, b)', :block_params => '')
+      c = double(:c, :name => 'ClassName', :parent => parent, :method_list => [method])
 
       result = generator.get_method_invocation_code(c, method)
       expect(result).to eq('class_name.do_something(a, b)')
@@ -97,19 +97,19 @@ describe RSpecKickstarter::Generator do
 
   describe '#get_block_code' do
     it 'works with no arg' do
-      method = double(:method, block_params: '')
+      method = double(:method, :block_params => '')
 
       result = generator.get_block_code(method)
       expect(result).to eq('')
     end
     it 'works with 1 arg block' do
-      method = double(:method, block_params: 'a')
+      method = double(:method, :block_params => 'a')
 
       result = generator.get_block_code(method)
       expect(result).to eq(' { |a| }')
     end
     it 'works with 2 args block' do
-      method = double(:method, block_params: 'a, b')
+      method = double(:method, :block_params => 'a, b')
 
       result = generator.get_block_code(method)
       expect(result).to eq(' { |a, b| }')
@@ -281,9 +281,9 @@ CODE
 
   describe '#get_rails_helper_method_invocation_code' do
     it 'works' do
-      parent = double(:parent, name: nil)
-      c = double(:c, name: 'ClassName', parent: parent)
-      method = double(:method, singleton: false, name: 'do_something', params: '(a, b)', block_params: '')
+      parent = double(:parent, :name => nil)
+      c = double(:c, :name => 'ClassName', :parent => parent)
+      method = double(:method, :singleton => false, :name => 'do_something', :params => '(a, b)', :block_params => '')
 
       result = generator.get_rails_helper_method_invocation_code(method)
       expect(result).to eq('do_something(a, b)')
